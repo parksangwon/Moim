@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/groupForm.css" />
+<script src="/js/groupForm.js"></script>
+<title th:if="${group == null}">모임 개설</title>
+<title th:if="${group != null}">모임 수정</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container" th:object="${group}">
+			<div class="jumbotron">
+				<div class="col-12">
+					<h2 class="mb-3" th:if="${group == null}">모임 개설</h2>
+					<h2 class="mb-3" th:if="${group != null}">모임 수정</h2>
+					<form class="needs-validation" enctype="multipart/form-data" id="group-form" novalidate>
+						<input type="hidden" name="groupId" th:value="${group?.groupId}"/>
+						<div class="row mb-3">
+							<div class="col-3" id="img-group">
+								<img th:if="${group?.imgAddr == null or group?.imgAddr == ''}" th:src="@{/img/groups/sample.png}" class="rounded mb-3">
+								<img th:if="${group?.imgAddr != null and group?.imgAddr != ''}" th:src="@{/img/groups/{groupId}/{imgAddr}(groupId=${group?.groupId},imgAddr=${group?.imgAddr})}" class="rounded mb-3">
+								<div class="input-group mb-3">
+									<input type="file" name="file" accept="image/*"/>
+								</div>
+							</div>
+							<div class="col-9">
+								<div class="row">
+									<div class="col-3 mb-3">
+										<label for="state">
+											카테고리<font color="#dc3545;" size="2rem">(필수)</font>
+										</label>
+										<select class="custom-select d-block w-100" id="category" name="category" required>
+											<option value="" th:selected="(${group?.category} == '')">카테고리</option>
+											<option value="교육" th:selected="(${group?.category} == '교육')">교육</option>
+											<option value="강연" th:selected="(${group?.category} == '강연')">강연</option>
+											<option value="취미활동" th:selected="(${group?.category} == '취미활동')">취미활동</option>
+											<option value="여행" th:selected="(${group?.category} == '여행')">여행</option>
+										</select>
+										<div class="invalid-feedback">카테고리를 선택해 주세요.</div>
+									</div>
+									<div class="col-9 mb-3">
+										<label for="title">
+											모임 이름<font color="#dc3545;" size="2rem">(필수)</font>
+										</label>
+										<input type="text" class="form-control" id="title" name="title" placeholder="모임 이름" pattern=".{5,100}" th:value="${group?.title}" required>
+										<div class="invalid-feedback">모임 이름을 입력해주세요. (최소 5자)</div>
+									</div>
+								</div>
+
+								<!-- 모집 일시 -->
+								<div class="mb-3">
+									<label for="project-datetime">
+										모집 일시<font color="#dc3545;" size="2rem">(필수)</font>
+									</label>
+									<div class="row">
+										<div class="col">
+											<div class="input-group date" id="recruit-start-datetime" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" id="recruit-start-datetime-input" name="rsDate" placeholder="모집 시작 일시" data-target="#recruit-start-datetime" th:value="${group?.rsDate}" required />
+												<div class="input-group-append" data-target="#recruit-start-datetime" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+												<div class="invalid-feedback">모집 시작 일시를 입력해주세요.</div>
+											</div>
+										</div>
+										<span class="align-bottom">부터</span>
+										<div class="col">
+											<div class="input-group date" id="recruit-finish-datetime" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" id="recruit-finish-datetime-input" name="rfDate" placeholder="모집 종료 일시" data-target="#recruit-finish-datetime" th:value="${group?.rfDate}" required />
+												<div class="input-group-append" data-target="#recruit-finish-datetime" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+												<div class="invalid-feedback">모집 종료 일시를 입력해주세요.</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- 모임 일시 -->
+								<div class="mb-3">
+									<label for="project-datetime">
+										모임 일시<font color="#dc3545;" size="2rem">(필수)</font>
+									</label>
+									<div class="row">
+										<div class="col">
+											<div class="input-group date" id="project-start-datetime" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" id="project-start-datetime-input" name="psDate" placeholder="모임 시작 일시" data-target="#project-start-datetime" th:value="${group?.psDate}" required />
+												<div class="input-group-append" data-target="#project-start-datetime" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+												<div class="invalid-feedback">모임 시작 일시를 입력해주세요.</div>
+											</div>
+										</div>
+										<span class="align-bottom">부터</span>
+										<div class="col">
+											<div class="input-group date" id="project-finish-datetime" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" id="project-finish-datetime-input" name="pfDate" placeholder="모임 종료 일시" data-target="#project-finish-datetime" th:value="${group?.pfDate}" required />
+												<div class="input-group-append" data-target="#project-finish-datetime" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+												<div class="invalid-feedback">모임 종료 일시를 입력해주세요.</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<label for="address-input">
+									모임 장소<font color="#dc3545;" size="2rem">(필수)</font>
+								</label>
+								<div class="input-group mb-3" id="address-group" data-target-input="nearest">
+									<input type="text" class="form-control" id="address-input" name="address" placeholder="모임 장소" data-target="#address-group" pattern=".{5,100}" th:value="${group?.address}" autocomplete="street-address" required />
+									<div class="input-group-append" data-target="#address-group">
+										<button class="btn btn-outline-secondary" id="find-address-button" type="button">주소찾기</button>
+									</div>
+									<div class="invalid-feedback">모임 장소를 입력해주세요.</div>
+								</div>
+							</div>
+							<!-- <div class="row"> -->
+						</div>
+						<!-- <div class="col-9"> -->
+
+						<hr class="mb-4">
+						<h5 class="mb-3">그룹 설정</h5>
+						<div class="row mb-3">
+							<div class="col-3">
+								<label for="recrewting-policy">
+									선정 방법<font color="#dc3545;" size="2rem">(필수)</font>
+								</label>
+								<select class="custom-select d-block w-100" id="recruiting-policy" name="recruitingPolicy">
+									<option value="FCFS" th:selected="(${group?.recruitingPolicy} == 'FCFS')">선착순</option>
+									<option value="SELECTION" th:selected="(${group?.recruitingPolicy} == 'SELECTION')">개설자 선정</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<label for="personnel">
+									모집 정원<font color="#dc3545;" size="2rem">(필수, 본인제외)</font>
+								</label>
+								<input type="number" class="form-control" id="personnel" name="personnel" placeholder="모집 정원" min="1" max="10000" th:value="${group?.personnel}" required>
+								<div class="invalid-feedback">모집 정원을 입력해주세요. (최대 1만명)</div>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="simple-info">
+								간단한 모임소개 입력<font color="#dc3545;" size="2rem">(필수)</font>
+							</label>
+							<input type="text" class="form-control" id="simple-info" name="simpleInfo" placeholder="모임 내용을 간단히 설명해주세요." pattern=".{10,100}" th:value="${group?.simpleInfo}" required>
+							<div class="invalid-feedback">모임 내용을 입력해주세요. (최소 10자)</div>
+						</div>
+
+						<hr class="mb-4">
+						<div class="mb-3">
+							<label for="detail-info">상세한 모임소개 입력</label>
+							<textarea class="form-control" id="detail-info" name="detailInfo" rows="3" th:inline="text">[[${group?.detailInfo}]]</textarea>
+						</div>
+						<hr class="mb-4">
+						<div class="row justify-content-md-center">
+							<button class="btn btn-primary btn-lg" type="submit" id="create" th:if="${group == null}">개설하기</button>
+							<button class="btn btn-primary btn-lg" type="submit" id="modify" th:if="${group != null}">수정하기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

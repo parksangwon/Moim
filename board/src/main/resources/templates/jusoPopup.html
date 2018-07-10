@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>주소 찾기</title>
+
+</head>
+<script th:inline="javascript" language="javascript">
+	function init() {
+		var url = location.href;
+		var confmKey = "U01TX0FVVEgyMDE4MDYwNjIzNDY0MzEwNzkzMDU=";
+		var resultType = "1";
+		var inputYn = /*[[${address.getInputYn()}]]*/;
+		if (inputYn != "Y") {
+			document.form.confmKey.value = confmKey;
+			document.form.returnUrl.value = url;
+			document.form.resultType.value = resultType;
+			document.form.action = "http://www.juso.go.kr/addrlink/addrLinkUrl.do";
+			document.form.submit();
+		} else {
+			opener.jusoCallBack(/*[[${address.getRoadFullAddr()}]]*/,/*[[${address.getRoadAddrPart1()}]]*/,/*[[${address.getAddrDetail()}]]*/,/*[[${address.getRoadAddrPart2()}]]*/,
+					/*[[${address.getEngAddr()}]]*/,/*[[${address.getJibunAddr()}]]*/,/*[[${address.getZipNo()}]]*/, /*[[${address.getAdmCd()}]]*/, /*[[${address.getRnMgtSn()}]]*/, /*[[${address.getBdMgtSn()}]]*/, 
+					/*[[${address.getDetBdNmList()}]]*/, /*[[${address.getBdNm()}]]*/, /*[[${address.getBdKdcd()}]]*/, /*[[${address.getSiNm()}]]*/, /*[[${address.getSggNm()}]]*/, /*[[${address.getEmdNm()}]]*/, 
+					/*[[${address.getLiNm()}]]*/, /*[[${address.getRn()}]]*/, /*[[${address.getUdrtYn()}]]*/, /*[[${address.getBuldMnnm()}]]*/, /*[[${address.getBuldSlno()}]]*/, /*[[${address.getMtYn()}]]*/, 
+					/*[[${address.getLnbrMnnm()}]]*/, /*[[${address.getLnbrSlno()}]]*/, /*[[${address.getEmdNo()}]]*/);
+			window.close();
+		}
+	}
+</script> 
+<body onload="init();">
+<body>
+	<form id="form" name="form" method="post">
+		<input type="hidden" id="confmKey" name="confmKey" value="" />
+		<input type="hidden" id="returnUrl" name="returnUrl" value="" />
+		<input type="hidden" id="resultType" name="resultType" value="" />
+	</form>
+</body>
+</html>

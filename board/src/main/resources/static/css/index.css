@@ -1,0 +1,22 @@
+.card {
+	cursor: Pointer;
+}
+
+.jumbotron {
+	margin-top: 2rem;
+}
+
+.btn-group .btn {
+	font-size: 0.7rem;
+}
+
+.card.shadow-sm {
+	width: 12rem;
+	margin: .415rem
+}
+
+.jumbotron.col-3 {
+	margin-top: 2rem;
+	padding-right: 1rem !important;
+	padding-left: 1rem !important
+}

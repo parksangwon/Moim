@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/myPage.css" />
+<script src="/js/memberDelete.js"></script>
+<title>회원 탈퇴</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<ul class="nav nav-pills nav-fill" id="mypage-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/member">마이페이지</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/member/edit">회원 정보 수정</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">회원탈퇴</a>
+				</li>
+			</ul>
+			<div class="jumbotron">
+				<div class="col-12">
+					<h2 class="mb-3">회원 탈퇴</h2>
+					<div class="row mb-3">
+						<div class="col-9" th:object="${user}">
+							<form class="needs-validation" novalidate>
+								<div class="form-group row">
+									<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+									<div class="col-sm-10">
+										<input type="text" readonly class="form-control-plaintext" id="staticEmail" autocomplete="email" th:value="${user?.email}">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" id="inputPassword" placeholder="현재 비밀번호" pattern=".{6,20}" title="6~20자리 입력해주세요." autocomplete="current-password" required>
+										<div class="invalid-feedback" id="invalid-password">비밀번호를 입력해 주세요.</div>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-primary">탈퇴하기</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

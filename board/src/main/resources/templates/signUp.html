@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/signUp.css">
+<script src="/js/signUp.js"></script>
+<title>회원가입</title>
+
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="row justify-content-md-center">
+			<div class="text-center col-lg-3">
+				<form class="form-signup">
+					<h1 class="h3 mb-3 font-weight-normal">회원 가입</h1>
+					<label for="inputEmail" class="sr-only">이메일</label>
+					<input type="email" id="email" name="email" class="form-control" placeholder="이메일" autocomplete="email" autofocus required>
+					<small id="emailHelpBlock" class="form-text text-muted"><font color="red"></font></small>
+					<label for="inputPassword" class="sr-only">비밀번호</label>
+					<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호 (6~20자리)" pattern=".{6,20}" title="6~20자리 입력해주세요." autocomplete="new-password" required>
+					<label for="inputPasswordConfirm" class="sr-only">비밀번호 확인</label>
+					<input type="password" id="password-confirm" name="password-confirm" class="form-control" placeholder="비밀번호 확인" pattern=".{6,20}" title="6~20자리 입력해주세요." autocomplete="new-password" required>
+					<small id="passwordHelpBlock" class="form-text text-muted"><font color="red">비밀번호를 다시 확인해주세요.</font></small>
+					<label for="inputName" class="sr-only">이름</label>
+					<input type="text" id="name" name="name" class="form-control" placeholder="이름(2~10자리)" pattern=".{2,10}" title="2~10자리 입력해주세요." required>
+					<label for="inputPhone" class="sr-only">휴대전화 번호</label>
+					<input type="text" id="phone" name="phone" class="form-control" placeholder="휴대전화 번호(10~20자리)" pattern=".{10,20}" title="10~20자리 입력해주세요."required>
+					<small id="inputHelpBlock" class="form-text text-muted"><font color="red">입력을 다시 확인해주세요.</font></small>
+					<button class="btn btn-lg btn-primary btn-lg" id="signup">회원가입</button>
+				</form>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<title>에러</title>
+
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<H1 class="display-2" th:text="${message}"></H1>
+		</div>
+	</section>
+</body>
+</html>

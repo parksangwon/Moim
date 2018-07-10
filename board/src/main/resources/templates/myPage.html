@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/myPage.css" />
+<title>마이페이지</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<ul class="nav nav-pills nav-fill" id="mypage-nav">
+				<li class="nav-item">
+					<a class="nav-link active" href="#">마이페이지</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/member/edit">회원 정보 수정</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/member/delete">회원탈퇴</a>
+				</li>
+			</ul>
+			<div class="jumbotron">
+				<div class="col-12">
+					<h2 class="mb-3">마이페이지</h2>
+					<div class="row mb-3">
+						<div class="col-12" th:object="${user}">
+							<form>
+								<div class="form-group row">
+									<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control-plaintext" id="staticEmail" th:value="${user?.email}" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputName" class="col-sm-2 col-form-label">이름</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control-plaintext" id="inputName" placeholder="이름" th:value="${user?.name}" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputPhone" class="col-sm-2 col-form-label">전화번호</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control-plaintext" id="inputPhone" placeholder="전화번호" th:value="${user?.phone}" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputCompany" class="col-sm-2 col-form-label">소속</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control-plaintext" id="inputCompany" placeholder="소속" th:value="${user?.company}" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputIntroduction" class="col-sm-2 col-form-label">내 소개</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control-plaintext" id="inputIntroduction" placeholder="자기소개" th:value="${user?.introduction}" readonly>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- div class row -->
+					<div class="row">
+						<div class="col-6">
+							<h4 class="mb-3">내 신청 이력</h4>
+							<div id="apply-history">
+								<div class="card" th:each="apply : ${applyList}">
+									<div class="card-body">
+										<div class="datetime">[[${#temporals.format(apply?.applyTime, 'yyyy년 MM월 dd일 hh시 mm분')}]]</div>
+										<h6 class="card-title">모임에 <b>참여신청</b>을 하였습니다.</h6>
+										<p class="card-text"><a th:href="@{/group/details/{groupId}(groupId=${apply?.group?.groupId})}">[[${apply?.group.title}]]</a></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<h4 class="mb-3">내 개설 이력</h4>
+							<div id="group-history">
+								<div class="card" th:each="group : ${groupList}">
+									<div class="card-body">
+										<div class="datetime">[[${#temporals.format(group?.createTime, 'yyyy년 MM월 dd일 hh시 mm분')}]]</div>
+										<h6 class="card-title">모임을 <b>개설</b>하였습니다.</h6>
+										<p class="card-text"><a th:href="@{/group/details/{groupId}(groupId=${group?.groupId})}">[[${group?.title}]]</a></p>
+										<p class="card-text simple-info">[[${group?.simpleInfo}]]</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

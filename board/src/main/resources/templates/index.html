@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<script src="/js/index.js"></script>
+<link rel="stylesheet" th:href="@{/css/index.css}" />
+<title>새로운 모임</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<div class="row">
+				<div class="jumbotron col-9">
+					<div class="row" id="group-list-container" th:object="${groups}">
+						<div class="col-12" th:if="${groups.size() == 0}">
+							<p class="text-center">모임이 없습니다.</p>
+						</div>
+						<div class="card shadow-sm" th:if="${groups.size() != 0}" th:each="group : ${groups}" th:id="${group?.groupId}">
+							<img class="card-img-top" th:if="${group?.imgAddr == null or group?.imgAddr == ''}" th:src="@{/img/groups/sample.png}">
+							<img class="card-img-top" th:if="${group?.imgAddr != null and group?.imgAddr != ''}" th:src="@{/img/groups/{groupId}/{imgAddr}(groupId=${group?.groupId}, imgAddr=${group?.imgAddr})}">
+							<div class="card-body" th:with="available=${group?.personnel - #lists.size(group?.applyList)}">
+								<h5 class="card-title" th:text="${group.title}"></h5>
+								<p class="card-text" th:text="${group.simpleInfo}"></p>
+								<a class="btn btn-primary" th:href="@{/group/details/{groupId}(groupId=${group?.groupId})}" th:if="${group?.recruitingPolicy == 'SELECTION'}" th:text="${group?.personnel + '명 모집 중'}"></a>
+								<a class="btn btn-primary" th:href="@{/group/details/{groupId}(groupId=${group?.groupId})}" th:if="${group?.recruitingPolicy == 'FCFS' && available > 0}" th:text="${available + '명 신청가능'}"></a>
+								<a class="btn btn-secondary" th:href="@{/group/details/{groupId}(groupId=${group?.groupId})}" th:if="${group?.recruitingPolicy == 'FCFS' && available <= 0}">정원 도달</a>
+							</div>
+						</div>
+						<!-- card -->
+					</div>
+					<!-- div row -->
+				</div>
+				<!-- div jumbotron -->
+				<div class="jumbotron col-3">
+					<form id="filtering-form">
+						<label for="keywordSearch">모임제목 / 본문</label>
+						<div class="btn-group-vertical col mb-3" id="dateTimeButtons">
+							<input type="text" class="form-control" id="keywordSearch" placeholder="키워드로 모임을 검색하세요." />
+						</div>
+						<label for="categoryButtons">카테고리</label>
+						<div class="mb-3" id="categoryButtons">
+							<div class="btn-group-vertical col">
+								<div class="btn-group" role="group">
+									<input type="button" class="btn btn-outline-primary" name="category" value="교육">
+									<input type="button"  class="btn btn-outline-primary" name="category" value="강연">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="category" value="취미활동">
+									<input type="button"  class="btn btn-outline-primary" name="category" value="여행">
+								</div>
+							</div>
+						</div>
+
+
+						<!-- div button group -->
+						<label for="addressButtons">지역</label>
+						<div class="mb-3" id="addressButtons">
+							<div class="btn-group-vertical col">
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="서울특별시">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="부산광역시">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="대구광역시">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="인천광역시">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="광주광역시">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="대전광역시">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="울산광역시">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="세종특별자치시">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="경기도">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="강원도">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="충청북도">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="충청남도">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="전라북도">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="전라남도">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="경상북도">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="경상남도">
+								</div>
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="address" value="제주특별자치도">
+								</div>
+							</div>
+						</div>
+
+						<!-- div button group -->
+						<label for="dateButtons">주중/주말</label>
+						<div class="mb-3" id="dateButtons">
+							<div class="btn-group-vertical col">
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="weekdate" value="주중">
+									<input type="button"  class="btn btn-outline-primary" name="weekdate" value="주말">
+								</div>
+							</div>
+						</div>
+						
+						<label for="timeButtons">오전/오후</label>
+						<div class="mb-3" id="timeButtons">
+							<div class="btn-group-vertical col">
+								<div class="btn-group" role="group">
+									<input type="button"  class="btn btn-outline-primary" name="time" value="AM">
+									<input type="button"  class="btn btn-outline-primary" name="time" value="PM">
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- side form -->
+				</div>
+				<!-- div jumbotron -->
+				<div style="position: absolute; width: 102px; left: 50%; margin: 2rem 0 0 590px;">
+					<div class="btn-group-vertical">
+						<a class="btn btn-primary" href="/group/new" role="button">개설하기</a>
+					</div>
+				</div>
+			</div>
+			<!-- div row -->
+		</div>
+		<!-- container -->
+	</section>
+</body>
+</html>

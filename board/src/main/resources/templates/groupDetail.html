@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/groupDetail.css" />
+<script th:inline="javascript">
+	const userId = /*[[${session.userId}]]*/;
+</script>
+<script src="/js/groupDetail.js"></script>
+<title>상세 조회</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container" th:object="${group}">
+			<div class="jumbotron" th:id="${group?.groupId}">
+				<div class="col-12">
+					<div class="row mb-3">
+						<div class="col-3" th:object="${writer}">
+							<img id="group-img" th:if="${group?.imgAddr == null or group?.imgAddr == ''}" th:src="@{/img/groups/sample.png}" class="rounded mb-3" alt="모임 이미지">
+							<img id="group-img" th:if="${group?.imgAddr != null and group?.imgAddr != ''}" th:src="@{/img/groups/{groupId}/{imgAddr}(groupId=${group?.groupId},imgAddr=${group?.imgAddr})}" class="rounded mb-3" alt="모임 이미지">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">개설자 정보</h5>
+									<h6 class="card-subtitle mb-2 text-muted">
+										<i class="fas fa-address-card"></i> [[${writer?.name}]]
+									</h6>
+									<p class="card-text">
+										<i class="fas fa-phone"></i><font size="2 rem"> [[${writer?.phone}]]</font> <br /> <i class="fas fa-envelope"></i><font size="2 rem"> [[${writer?.email}]]</font>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-9">
+							<div class="row">
+								<div class="col-3 mb-3">
+									<label for="state"> 카테고리 </label>
+									<select class="custom-select d-block w-100" id="category" disabled>
+										<option value="" th:selected="(${group?.category} == '')">카테고리</option>
+										<option value="교육" th:selected="(${group?.category} == '교육')">교육</option>
+										<option value="강연" th:selected="(${group?.category} == '강연')">강연</option>
+										<option value="취미활동" th:selected="(${group?.category} == '취미활동')">취미활동</option>
+										<option value="여행" th:selected="(${group?.category} == '여행')">여행</option>
+									</select>
+								</div>
+								<div class="col-9 mb-3">
+									<label for="title"> 모임 이름 </label>
+									<input type="text" class="form-control" id="title" th:value="${group?.title}" disabled />
+								</div>
+							</div>
+							<div class="mb-3">
+								<label for="simple-info">간단한 모임소개</label>
+								<input type="text" class="form-control" id="simple-info" placeholder="모임 내용을 간단히 설명해주세요." th:value="${group?.simpleInfo}" disabled>
+							</div>
+
+							<div class="mb-3">
+								<label for="project-datetime">모집 일시</label>
+								<div class="row">
+									<div class="col">
+										<div class="input-group date" id="recruit-start-datetime" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" id="recruit-start-datetime-input" placeholder="모집 시작 일시" data-target="#recruit-start-datetime" th:value="${#temporals.format(group?.rsDate, 'yyyy-MM-dd HH:mm')}" disabled />
+										</div>
+									</div>
+									<span class="align-bottom">부터</span>
+									<div class="col">
+										<div class="input-group date" id="recruit-finish-datetime" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" id="recruit-finish-datetime-input" placeholder="모집 종료 일시" data-target="#recruit-finish-datetime" th:value="${#temporals.format(group?.rfDate, 'yyyy-MM-dd HH:mm')}" disabled />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="project-datetime">모임 일시</label>
+								<div class="row">
+									<div class="col">
+										<div class="input-group date" id="project-start-datetime" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" id="project-start-datetime-input" placeholder="모임 시작 일시" data-target="#project-start-datetime" th:value="${#temporals.format(group?.psDate, 'yyyy-MM-dd HH:mm')}" disabled />
+										</div>
+									</div>
+									<span class="align-bottom">부터</span>
+									<div class="col">
+										<div class="input-group date" id="project-finish-datetime" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" id="project-finish-datetime-input" placeholder="모임 종료 일시" data-target="#project-finish-datetime" th:value="${#temporals.format(group?.pfDate, 'yyyy-MM-dd HH:mm')}" disabled />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="area"> 모임 장소 </label>
+								<input type="text" class="form-control" id="address" placeholder="모임 장소" th:value="${group?.address}" disabled>
+							</div>
+							<div class="row mb-3">
+								<div class="col-3">
+									<label for="recrewting-policy">선정 방법</label>
+									<select class="custom-select d-block w-100" id="recruiting-policy" disabled>
+										<option value="FCFS" th:selected="(${group?.recruitingPolicy} == 'FCFS')">선착순</option>
+										<option value="SELECTION" th:selected="(${group?.recruitingPolicy} == 'SELECTION')">개설자 선정</option>
+									</select>
+								</div>
+								<div class="col-2">
+									<label for="applyUsers">신청자 수</label>
+									<input type="number" class="form-control" id="applies" placeholder="신청자 수" th:value="${#lists.size(group?.applyList)}" disabled>
+								</div>
+								<div class="col-2">
+									<label for="personnel">모집 정원</label>
+									<input type="number" class="form-control" id="personnel" placeholder="모집 정원" th:value="${group?.personnel}" disabled>
+								</div>
+								<div class="col-5">
+									<div class="row" th:if="${session.userId != group?.user?.userId}">
+										<div class="col-8" th:switch="${groupCondition}">
+											<div th:case="BEFORERECRUIT" class="btn btn-secondary btn-lg btn-block" id="apply-button">모집 대기중</div>
+											<div th:case="NONE" class="btn btn-primary btn-lg btn-block" id="apply-button">신청 하기</div>
+											<div th:case="SELECTION" class="btn btn-primary btn-lg btn-block" id="apply-button">신청 하기</div>
+											<div th:case="APPLIED" class="btn btn-primary btn-lg btn-block active" id="apply-button">신청 취소</div>
+											<div th:case="FULLOFPERSONNEL" class="btn btn-secondary btn-lg btn-block" id="apply-button">정원 도달</div>
+											<div th:case="RECRUITFINISHED" class="btn btn-secondary btn-lg btn-block" id="apply-button">신청 종료</div>
+											<div th:case="PROJECTFINISHED" class="btn btn-secondary btn-lg btn-block" id="apply-button">일정 종료</div>
+										</div>
+										<div class="col-4" th:switch="${recommendCondition}">
+											<button th:case="'NONE'" class="btn btn-outline-warning btn-lg btn-block" id="recommend-button">
+												추천<span class="badge badge-light">[[${#lists.size(group?.recommendList)}]]</span>
+											</button>
+											<button th:case="'RECOMMEND'" class="btn btn-warning btn-lg btn-block" id="recommend-button">
+												추천<span class="badge badge-light">[[${#lists.size(group?.recommendList)}]]</span>
+											</button>
+										</div>
+									</div>
+									<div class="row" th:if="${session.userId == group?.user?.userId}">
+										<div class="col-12" th:switch="${groupCondition}">
+											<div th:case="BEFORERECRUIT" class="btn btn-secondary btn-lg btn-block">모집 대기중</div>
+											<div th:case="RECRUITFINISHED" class="btn btn-secondary btn-lg btn-block">신청 종료</div>
+											<div th:case="PROJECTFINISHED" class="btn btn-secondary btn-lg btn-block">일정 종료</div>
+											<div th:case="*" class="btn btn-secondary btn-lg btn-block">[[${restTime}]]</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<hr class="mb-4">
+				<div class="mb-3">
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">상세정보</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="comment-list-tab" data-toggle="tab" href="#comment-list" role="tab" aria-controls="comment-list" aria-selected="false">댓글</a>
+						</li>
+						<li class="nav-item" th:if="${session.userId == group?.user?.userId}">
+							<a class="nav-link" id="applier-list-tab" data-toggle="tab" href="#applier-list" role="tab" aria-controls="applier-list" aria-selected="false">신청자 목록</a>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+							<textarea class="form-control" id="detail-info" rows="3" th:inline="text" disabled>[[${group?.detailInfo}]]</textarea>
+						</div>
+						<div class="tab-pane fade" id="comment-list" role="tabpanel" aria-labelledby="comment-list-tab">
+							<div class="input-group input-group-lg" th:if="${session.userId != null}">
+								<input type="text" class="form-control" id="comment-input" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+								<div class="btn btn-primary" id="comment-button">댓글 달기</div>
+							</div>
+							<div class="card" name="comment-card" th:each="comment : ${group?.commentList}">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-1">[[${comment?.user?.name}]]</div>
+										<div class="col-7">[[${comment?.content}]]</div>
+										<div class="col-3">[[${#temporals.format(comment?.createTime, "yyyy-MM-dd HH:mm")}]]</div>
+										<button type="button" class="close" aria-label="Close" name="comment-delete" th:if="${session.userId == comment?.user?.userId}" th:attr="data-id=${comment?.commentId}">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="applier-list" role="tabpanel" aria-labelledby="applier-list-tab" th:if="${session.userId == group?.user?.userId}">
+							<div class="card" th:each="apply, index : ${group?.applyList}">
+								<div class="card-body">
+									<span th:text="${'순서 : ' + (index.index+1)}"></span>
+									<span th:text="${'이름 : ' + apply?.user?.name}"></span>
+									<span th:text="${'이메일 : ' + apply?.user?.email}"></span>
+									<span th:text="${'전화번호 : ' + apply?.user?.phone}"></span>
+									<span th:text="${'신청시간 : ' + #temporals.format(apply?.applyTime, 'yyyy-MM-dd HH:mm')}"></span>
+									<button type="button" class="close" aria-label="Close" name="apply-delete" th:if="${session.userId == group?.user?.userId}" th:attr="data-id=${apply?.applyId}">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr class="mb-4">
+				<div class="row justify-content-md-center" th:if="${session?.userId == group?.user?.userId}">
+					<div class="col-2">
+						<div class="btn btn-primary" id="modify-group">수정하기</div>
+					</div>
+					<div class="col-2">
+						<div class="btn btn-primary" id="delete-group">삭제하기</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

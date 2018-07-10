@@ -1,0 +1,17 @@
+.jumbotron {
+	margin-top: 1rem;
+}
+
+#mypage-nav {
+	margin-top : 2rem;
+}
+
+.datetime {
+	float: right;
+	font-size: 0.5rem;
+}
+
+.simple-info {
+	font-style: italic;
+	font-size: 0.5rem;
+}

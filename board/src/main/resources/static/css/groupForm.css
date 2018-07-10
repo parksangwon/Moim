@@ -1,0 +1,50 @@
+.jumbotron {
+	margin-top: 2rem	
+}
+
+.border-top {
+	border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.border-top-gray {
+	border-top-color: #adb5bd;
+}
+
+.box-shadow {
+	box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.lh-condensed {
+	line-height: 1.25;
+}
+
+.text-vertical-align-middle {
+	vertical-align: middle;
+}
+
+#address-input:disabled {
+    color: #495057;
+    background-color: white;
+}
+
+#img-group img {
+	width: 100%;
+}
+
+.input-group-append>.btn {
+	border-top-right-radius: .25rem !important;
+	border-bottom-right-radius: .25rem !important;
+}
+
+.input-group-text {
+	border-top-right-radius: .25rem !important;
+	border-bottom-right-radius: .25rem !important;
+}
+
+.form-control[readonly] {
+	background-color: white !important;
+}

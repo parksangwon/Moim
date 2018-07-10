@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/login.css">
+<script src="/js/login.js"></script>
+<title>로그인</title>
+
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="row justify-content-md-center">
+			<div class="text-center col-lg-3">
+				<form class="form-signin">
+					<h1 class="h3 mb-3 font-weight-normal">로그인</h1>
+					<label for="inputEmail" class="sr-only">이메일</label>
+					<input type="email" id="email" name="email" class="form-control" placeholder="이메일" autocomplete="email" required autofocus>
+					<label for="inputPassword" class="sr-only">비밀번호</label>
+					<input type="password" id="password" name="password" class="form-control" autocomplete="current-password" placeholder="비밀번호" required>
+					<div class="alert alert-danger" id="error-message">잘못된 아이디나 암호입니다.</div>
+					<button class="btn btn-lg btn-primary btn-lg" id="login">로그인</button>
+					<button class="btn btn-lg btn-secondary btn-lg" id="signup">회원가입</button>
+				</form>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

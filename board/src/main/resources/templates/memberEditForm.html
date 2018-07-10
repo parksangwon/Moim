@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+<head>
+<link rel="stylesheet" href="/css/myPage.css" />
+<script src="/js/memberEditForm.js"></script>
+<title>회원 정보 수정</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<ul class="nav nav-pills nav-fill" id="mypage-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/member">마이페이지</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">회원 정보 수정</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/member/delete">회원탈퇴</a>
+				</li>
+			</ul>
+			<div class="jumbotron">
+				<div class="col-12">
+					<h2 class="mb-3">회원 정보 수정</h2>
+					<div class="row mb-3">
+						<div class="col-9" th:object="${user}">
+							<form class="needs-validation" novalidate>
+								<div class="form-group row">
+									<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+									<div class="col-sm-10">
+										<input type="text" readonly class="form-control-plaintext" id="staticEmail" autocomplete="email" th:value="${user?.email}">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" id="inputPassword" placeholder="현재 비밀번호" pattern=".{6,20}" title="6~20자리 입력해주세요." autocomplete="current-password" required>
+										<div class="invalid-feedback" id="invalid-password">비밀번호를 입력해 주세요.</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputName" class="col-sm-2 col-form-label">이름</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inputName" placeholder="이름" pattern=".{2,10}" title="2~10자리 입력해주세요." th:value="${user?.name}" required>
+										<div class="invalid-feedback">이름을 입력해 주세요.</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputPhone" class="col-sm-2 col-form-label">전화번호</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inputPhone" placeholder="전화번호" pattern=".{10,20}" title="10~20자리 입력해주세요." th:value="${user?.phone}" required>
+										<div class="invalid-feedback">전화번호를 입력해 주세요.</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputCompany" class="col-sm-2 col-form-label">소속</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inputCompany" placeholder="소속" pattern=".{0,30}" title="최대 30자까지 입력해주세요." th:value="${user?.company}">
+										<div class="invalid-feedback">최대 30자까지 입력해주세요.</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputIntroduction" class="col-sm-2 col-form-label">자기소개</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inputIntroduction" placeholder="자기소개" pattern=".{0,100}" title="최대 100자리까지 입력해주세요." th:value="${user?.introduction}">
+										<div class="invalid-feedback">최대 100자까지 입력해주세요.</div>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-primary">수정하기</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

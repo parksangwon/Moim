@@ -1,0 +1,21 @@
+.jumbotron {
+	margin-top: 2rem	
+}
+
+.custom-select:disabled {
+    color: #495057;
+    background-color: white;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}
+
+#group-img {
+	width: 100%;
+}
+
+.card {
+	width: 100%;
+}
